@@ -1,14 +1,17 @@
 
 
     <section>
+      
+              
       <div class="container mt-5">
         <div class="row">
-            {{#each products}}
+            {{#each data}}
 
           <div class="col-md-3" >
             <div class="card bg-image hover-overlay hover-zoom hover-shadow ripple" >
               <img 
-                src="{{image}}"
+               
+                src="./dbimages/{{_id}}.jpg"
                 class="card-img-top"
                 alt="..."
                 style=" width:100%;
@@ -17,8 +20,8 @@
                 
               />
               <div class="card-body">
-                <h5 class="card-title">{{name}}</h5>
-                <p class="card-text">{{description}}</p>
+                <h5 class="card-title">{{Name}}</h5>
+                <p class="card-text">{{Description}}</p>
                 <a href="#" class="btn btn-primary">    Add to cart</a>
               </div>
             </div>

@@ -1,40 +1,50 @@
 var express = require("express");
 var router = express.Router();
+var productHelper = require("../helpers/producthelpers");
+var userHelper=require('../helpers/userhelpers')
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  products = [
-    {
-      name: "Iphone 11",
-      category: "Mobile",
-      description: " Latest model from Apple",
-      image:
-        "https://d1eh9yux7w8iql.cloudfront.net/product_images/290060_374aef9d-24fa-4d24-bb8c-f27ce27b711f.jpg",
-    },
-    {
-      name: "Iphone 12",
-      category: "Mobile",
-      description: " Latest model from Apple",
-      image:
-        "https://www.apple.com/newsroom/images/product/iphone/geo/apple_iphone-12_2-up_geo_10132020_inline.jpg.large.jpg",
-    },
-    {
-      name: "Pixel",
-      category: "Mobile",
-      description: " Latest model from Google",
-      image:
-        "https://lh3.googleusercontent.com/fPVwTGSf4NcAhnh111lrzbzRIoP-ZxKzDeHmfy3FHslyARSGrNK35uGiyIc8tm3JEYpM5sLvas27mVWVjO7EhL0L4o-VCdBToQ=rw-e365-w1050",
-    },
-    {
-      name: "Samsung s10",
-      category: "Mobile",
-      description: " Latest model from Samsung",
-      image:
-        "https://media.wired.co.uk/photos/606d9c109a15f73a597a18d4/master/w_1600%2Cc_limit/s10-5.jpg",
-    },
-  ];
-
-  res.render("./user/user", { products,admin:false});
+  productHelper.getProduct().then((data) => {
+    res.render("./user/user", { data, admin: false });
+  });
 });
+
+router.get("/login", (req, res) => {
+  res.render("./user/login", { admin: false });
+});
+router.get("/login/signup", (req, res) => {
+  res.render("./user/signup", { admin: false });
+});
+
+router.post("/", function (req, res, next) {
+  productHelper.getProduct().then((data) => {
+    // console.log(data)
+    res.render("./user/user", { data, admin: false });
+  });
+});
+
+router.post("/login", (req, res) => {
+
+  
+    userHelper.doSignup(req.body).then((data)=>{  
+    console.log('workiongh');
+    console.log(data);
+    res.render("./user/login", { admin: false });
+  })
+});
+
+// a promise
+let promise = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+  resolve('Promise resolved')}, 4000); 
+});
+
+
+
+
+
+
+
 
 module.exports = router;
